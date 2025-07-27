@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Monitor de Temperatura y Humedad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+      background-color: #fff;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    .aumento {
+      background-color: #ffe6e6;
+      color: red;
+    }
+    .disminucion {
+      background-color: #fff7cc;
+      color: orange;
+    }
+    .igual {
+      background-color: #e6ffe6;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌡️ Historial de Temperatura y Humedad</h1>
+
+  <table>
+    <tr>
+      <th>Fecha</th>
+      <th>Temperatura (°C)</th>
+      <th>Humedad (%)</th>
+      <th>Tendencia</th>
+    </tr>
+    {% for i in range(datos|length) %}
+    {% set fila = datos[i] %}
+    {% set anterior = datos[i+1] if i+1 < datos|length else None %}
+    {% if anterior %}
+      {% if fila.temperatura > anterior.temperatura %}
+        {% set clase = 'aumento' %}
+        {% set tendencia = '⬆️ Aumento' %}
+      {% elif fila.temperatura < anterior.temperatura %}
+        {% set clase = 'disminucion' %}
+        {% set tendencia = '⬇️ Descenso' %}
+      {% else %}
+        {% set clase = 'igual' %}
+        {% set tendencia = '➖ Sin cambio' %}
+      {% endif %}
+    {% else %}
+      {% set clase = 'igual' %}
+      {% set tendencia = '— Primera lectura' %}
+    {% endif %}
+    <tr class="{{ clase }}">
+      <td>{{ fila.fecha }}</td>
+      <td>{{ fila.temperatura }}</td>
+      <td>{{ fila.humedad }}</td>
+      <td>{{ tendencia }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
+

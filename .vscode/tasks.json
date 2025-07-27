@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Subir main.py a ESP32",
+      "type": "shell",
+      "command": "mpremote",
+      "args": [
+        "connect",
+        "/dev/ttyUSB0",
+        "fs",
+        "cp",
+        "main.py",
+        ":main.py"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Subir boot.py a ESP32",
+      "type": "shell",
+      "command": "mpremote",
+      "args": [
+        "connect",
+        "/dev/ttyUSB0",
+        "fs",
+        "cp",
+        "boot.py",
+        ":boot.py"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Reiniciar ESP32",
+      "type": "shell",
+      "command": "mpremote",
+      "args": [
+        "connect",
+        "/dev/ttyUSB0",
+        "reset"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
